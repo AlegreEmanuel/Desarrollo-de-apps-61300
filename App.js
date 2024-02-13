@@ -14,9 +14,7 @@ export default function App() {
     return null
   }
 
-  const handleSearch = (searchTerm) => {
-    console.log('Searching for:', searchTerm);
-  };
+ 
 
   const handleBackToHome = () => {
     setCategorySelected('');
