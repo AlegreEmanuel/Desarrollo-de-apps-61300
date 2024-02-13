@@ -1,20 +1,47 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import Home from './src/screens/home';
+import ItemListCategory from './src/screens/ItemListCategory';
+import { useState } from 'react';
+import { useFonts } from 'expo-font';
+import { fonts } from './src/global/fonts';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  const [currentScreen, setCurrentScreen] = useState('Home');
+  const [categorySelected, setCategorySelected] = useState('');
+  const [fontsLoaded] = useFonts(fonts);
+
+  if(!fontsLoaded){
+    return null
+  }
+
+  const handleSearch = (searchTerm) => {
+    console.log('Searching for:', searchTerm);
+  };
+
+  const handleBackToHome = () => {
+    setCategorySelected('');
+    setCurrentScreen('Home');
+  };
+
+  const handleCategorySelected = (category) => {
+    setCategorySelected(category);
+    setCurrentScreen('ItemListCategory');
+  };
+
+
+  return (
+    <>
+      {currentScreen === 'Home' ? (
+        <Home setCategorySelected={handleCategorySelected} />
+      ) : (
+        <ItemListCategory
+          category={categorySelected}
+          onBack={handleBackToHome}
+        />
+      )}
+    </>
+  );
+
+
+
+}
