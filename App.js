@@ -1,13 +1,9 @@
-import Home from './src/screens/home';
-import ItemListCategory from './src/screens/ItemListCategory';
-import { useState } from 'react';
 import { useFonts } from 'expo-font';
 import { fonts } from './src/global/fonts';
+import Navigator from './src/Navigation/Navigator';
 
 export default function App() {
 
-  const [currentScreen, setCurrentScreen] = useState('Home');
-  const [categorySelected, setCategorySelected] = useState('');
   const [fontsLoaded] = useFonts(fonts);
 
   if(!fontsLoaded){
@@ -15,31 +11,24 @@ export default function App() {
   }
 
  
-
-  const handleBackToHome = () => {
-    setCategorySelected('');
-    setCurrentScreen('Home');
-  };
-
-  const handleCategorySelected = (category) => {
-    setCategorySelected(category);
-    setCurrentScreen('ItemListCategory');
-  };
-
-
-  return (
-    <>
-      {currentScreen === 'Home' ? (
-        <Home setCategorySelected={handleCategorySelected} />
-      ) : (
-        <ItemListCategory
-          category={categorySelected}
-          onBack={handleBackToHome}
-        />
-      )}
-    </>
-  );
-
-
+  return  <Navigator/>
 
 }
+
+
+
+
+
+
+
+
+/*<SafeAreaView style={{flex:1}}>
+    <StatusBar style="auto"/>
+
+    {productDetailId ? (<ItemDetails productDetailId={productDetailId} setProductDetailId={setProductDetailId} />) : categorySelected ? (
+        <ItemListCategory setCategorySelected={setCategorySelected} category={categorySelected} setProductDetailId={setProductDetailId}/>
+      ):(
+      <Home setCategorySelected={setCategorySelected}/>
+      )}
+      
+  </SafeAreaView>*/

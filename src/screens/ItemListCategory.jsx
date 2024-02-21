@@ -1,21 +1,20 @@
-import { Text, View,FlatList, Pressable, StyleSheet } from "react-native";
+import { View,FlatList, StyleSheet } from "react-native";
 import Allproducts from "../data/products.json"
 import ProductItem from "../components/ProductItem";
 import Search from "../components/Search";
 import React, { useEffect, useState } from "react";
 import { colors } from "../global/colors";
-import {AntDesign} from '@expo/vector-icons';
 
 
-const ItemListCategory = ({category, onBack }) => {
+const ItemListCategory = ({navigation, route }) => {
 
     const [products, setProducts] = useState([])
     const [keyword, setKeyword] = useState("")
 
+    const {category} = route.params
+
 
     useEffect (() => {
-        console.log("Category:", category);
-        console.log("Keyword:", keyword);
         if(category){
             const products = Allproducts.filter(product =>
                 product.category === category &&
@@ -33,16 +32,13 @@ const ItemListCategory = ({category, onBack }) => {
 
         return(
             <View style={{flex:1, backgroundColor: colors.blue_200}}>
+                
                 <View style={styles.header}>
                 <Search keyword={keyword} onSearch={setKeyword}/>
-                <Pressable onPress={onBack}>
-                    <AntDesign name="caretleft" size={25} color={'white'}/>
-                </Pressable>
                 </View>
-
                 <FlatList style={{marginTop: 30}}
                 data={products}
-                renderItem={({item})=> <ProductItem product={item}/>}
+                renderItem={({item})=> <ProductItem product={item} navigation={navigation}/>}
                 keyExtractor={(item)=> item.id}
                 />
                 
@@ -61,6 +57,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingRight: '2%',
+        height: '7%',
+
         
 
 

@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     input:{
         flexDirection: 'row',
         alignItems: 'center',
-        minWidth: '50%',
+        width: '100%',
         backgroundColor: '#000', 
         borderRadius: 8, 
         margin: 16, 
