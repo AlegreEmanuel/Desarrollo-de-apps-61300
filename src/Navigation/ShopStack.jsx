@@ -1,4 +1,3 @@
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "../screens/home";
 import ItemListCategory from "../screens/ItemListCategory";
@@ -6,11 +5,10 @@ import ItemDetail from "../screens/ItemDetail";
 import Header from "../components/Header";
 import allProducts from '../data/products.json';
 
-const Navigator = () => {
+const ShopStack = () => {
   const Stack = createNativeStackNavigator();
 
   return (
-    <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Home"
         screenOptions={({ route, navigation }) => ({
@@ -25,6 +23,7 @@ const Navigator = () => {
               }
               showBackButton={route.name !== "Home"}
               navigation={navigation}
+              
             />
           ),
         })}
@@ -33,8 +32,7 @@ const Navigator = () => {
         <Stack.Screen name="ItemListCategory" component={ItemListCategory} />
         <Stack.Screen name="ItemDetail" component={ItemDetail} />
       </Stack.Navigator>
-    </NavigationContainer>
   );
 };
 
-export default Navigator;
+export default ShopStack;

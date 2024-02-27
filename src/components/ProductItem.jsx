@@ -9,7 +9,6 @@ const ProductItem = ({product, navigation}) => {
 
     const{width, height} = useWindowDimensions();
     
-    console.log(width,height)
 
     useEffect(()=> {
         if(height>width){

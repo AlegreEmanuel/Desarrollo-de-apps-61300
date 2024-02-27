@@ -4,12 +4,10 @@ import { colors } from "../global/colors";
 
 
 
-function Home({navigation}) {
+function Home({ navigation }) {
     return (
-        <View style={{ flex: 1}}>
-        <View  style={{backgroundColor: colors.blue_400 }}>
-            <Categories navigation = {navigation}/>
-        </View>
+        <View style={{ backgroundColor: colors.blue_400, flex:1 }}>
+          <Categories navigation={navigation} />
         </View>
     );
   }

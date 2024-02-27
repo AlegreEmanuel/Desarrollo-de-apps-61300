@@ -1,34 +1,24 @@
 import { useFonts } from 'expo-font';
 import { fonts } from './src/global/fonts';
-import Navigator from './src/Navigation/Navigator';
+import TabNavigator from './src/Navigation/TabNavigation';
+import { Provider } from 'react-redux';
+import store from './src/store/index'
+import { View } from 'react-native-web';
+import React from 'react';
+
 
 export default function App() {
-
   const [fontsLoaded] = useFonts(fonts);
 
-  if(!fontsLoaded){
-    return null
+  if (!fontsLoaded) {
+    return null;
   }
 
- 
-  return  <Navigator/>
-
+  return (
+    <Provider store={store}>
+      <View style={{ flex: 1 }}>
+        <TabNavigator />
+      </View>
+    </Provider>
+  );
 }
-
-
-
-
-
-
-
-
-/*<SafeAreaView style={{flex:1}}>
-    <StatusBar style="auto"/>
-
-    {productDetailId ? (<ItemDetails productDetailId={productDetailId} setProductDetailId={setProductDetailId} />) : categorySelected ? (
-        <ItemListCategory setCategorySelected={setCategorySelected} category={categorySelected} setProductDetailId={setProductDetailId}/>
-      ):(
-      <Home setCategorySelected={setCategorySelected}/>
-      )}
-      
-  </SafeAreaView>*/

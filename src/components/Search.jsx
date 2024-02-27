@@ -1,48 +1,38 @@
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import React, { useState } from "react";
 import {AntDesign} from '@expo/vector-icons';
+import { useDispatch } from "react-redux";
+import { setSearchKeyword } from "../features/shop/shopSlice";
 
 
-
-const Search = ({onSearch  }) => {
-
+const Search = ({ onSearch }) => {
     const [input, setInput] = useState("");
+    const dispatch = useDispatch();
 
     const search = () => {
-        console.log("Search:", input);
-        onSearch(input)
+        dispatch(setSearchKeyword(input));
+        onSearch(input);
+        removeInput();
     }
 
-  
-
- 
-
-    const removeInput = ()=>{
-        setInput(""); 
+    const removeInput = () => {
+        setInput("");
     }
 
-
-    return(
-
-
-            <View style = {styles.container}>
-                <TextInput 
+    return (
+        <View style={styles.container}>
+            <TextInput
                 style={styles.input}
                 value={input}
                 onChangeText={setInput}
-                placeholder="Buscar Producto" 
-                />
-                <Pressable onPress={search}>
-                    <AntDesign name="search1" size={25} color={'white'}/>
-                </Pressable>
-
-            </View>
-
-
-    )
-
+                placeholder="Buscar Producto"
+            />
+            <Pressable onPress={search}>
+                <AntDesign name="search1" size={25} color={'white'} />
+            </Pressable>
+        </View>
+    );
 }
-
 
 export default Search;
 
