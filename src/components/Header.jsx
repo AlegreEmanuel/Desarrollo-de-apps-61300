@@ -2,8 +2,21 @@ import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { colors } from "../global/colors";
 import { Ionicons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "../features/auth/authSlice";
+
+
 
 function Header({ title, showBackButton, navigation }) {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth?.value.user);
+
+
+  const SignOut = () => {
+    dispatch(signOut());
+  };
+
+
   return (
     <View style={styles.container}>
       {showBackButton && (
@@ -15,6 +28,12 @@ function Header({ title, showBackButton, navigation }) {
         </TouchableOpacity>
       )}
       <Text style={styles.text}>{title}</Text>
+      {user ? (
+      <TouchableOpacity onPress={SignOut} style={styles.logoutButton}>
+        <Ionicons name="exit" size={24} color="white" />
+      </TouchableOpacity>):
+      (null)
+      }
     </View>
   );
 }
@@ -39,5 +58,9 @@ const styles = StyleSheet.create({
   backButton: {
     position: "absolute",
     left: 16,
+  },
+  logoutButton: {
+    position: "absolute",
+    right: 16,
   },
 });

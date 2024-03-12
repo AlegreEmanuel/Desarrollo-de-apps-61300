@@ -1,12 +1,19 @@
-import { Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet, Image, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import allProducts from '../data/products.json';
 import { colors } from "../global/colors";
+import { useDispatch } from "react-redux";
+import { addItem } from "../features/shop/cartSlice";
 
 const ItemDetail = ({navigation, route}) => {
   const [product, setProduct] = useState(null);
 
   const {id} = route.params;
+
+  const dispatch = useDispatch()
+  const onAddCart= ()=>{
+    dispatch(addItem({...product, quantity:1}))
+  }
 
   useEffect(() => {
     const productFound = allProducts.find((product) => product.id === id);
@@ -22,12 +29,15 @@ const ItemDetail = ({navigation, route}) => {
                 <Text style={styles.category}>Categoria: {product.category}</Text>
                 <Text style={styles.description}><strong>Descripción:</strong> {product.description}</Text>
                 <Text style={styles.rating}>{`Rating: ${product.rating}/5`}</Text>
-
                 </View>
-                <View >
+                <View>
                 <Image style={styles.image} source={{ uri: product.images[0] }} />
                 </View>
                 <Text style={styles.price}>{`Price: $${product.price}`}</Text>
+                <Pressable onPress={onAddCart}>
+                <Text style={styles.price}>Add to cart</Text>
+                </Pressable>
+
             </View>
       </View>
     </View>

@@ -1,10 +1,10 @@
 import { useFonts } from 'expo-font';
 import { fonts } from './src/global/fonts';
-import TabNavigator from './src/Navigation/TabNavigation';
 import { Provider } from 'react-redux';
 import store from './src/store/index'
 import { View } from 'react-native-web';
 import React from 'react';
+import MainNavigator from './src/Navigation/MainNavigator';
 
 
 export default function App() {
@@ -17,7 +17,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <View style={{ flex: 1 }}>
-        <TabNavigator />
+        <MainNavigator />
       </View>
     </Provider>
   );
