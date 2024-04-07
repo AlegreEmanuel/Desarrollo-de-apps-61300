@@ -34,6 +34,7 @@ export const authSlice = createSlice ({
             }
         },
         setProfileImage: (state,action)=>{
+            
             state.value = {
                 ...state.value,
                 profileImage:action.payload

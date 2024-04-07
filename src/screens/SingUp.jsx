@@ -53,11 +53,11 @@ const SingUp = () => {
   }
     const dispatch = useDispatch()
 
-    useEffect(()=>{
-      if(result.data){
-        dispatch(setUser(result))
+    useEffect(() => {
+      if (result.data) {
+        dispatch(setUser(result.data)); 
       }
-    }, [result])
+    }, [result]);
 
     return (
       <View style={styles.container}>

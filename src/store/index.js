@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from '../features/counters/counterSlice'
 import shopReducer from '../features/shop/shopSlice'
 import cartReducer from '../features/shop/cartSlice'
 import authReducer from '../features/auth/authSlice'
@@ -9,7 +8,6 @@ import { authApi } from "../services/AuthService";
 
 
 const rootReducer = {
-  counterReducer,
   shopReducer,
   cartReducer,
   authReducer,

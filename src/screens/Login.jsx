@@ -64,7 +64,7 @@ const Login = () => {
         <View style={styles.container}>
             <Text style={styles.title}>Login</Text>
             <InputForm  label={"Email"} error={errorEmail} onChange={setEmail} />
-            <InputForm  label={"Password"} error={errorPassword} onChange={setPassword} />
+            <InputForm  label={"Password"} error={errorPassword} isSecure={true} onChange={setPassword} />
             {result.isLoading ? (<ActivityIndicator size="large" color="blue"/>
             ):( 
                 <View>

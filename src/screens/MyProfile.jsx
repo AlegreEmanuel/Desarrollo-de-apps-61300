@@ -18,6 +18,7 @@ const MyProfile = ({ navigation }) => {
             dispatch(setProfileImage(data.image));
         }
     }, [data, dispatch]);
+    
 
     const profileImage = useSelector((state) => state.authReducer.value.profileImage);
     const address = userLocation.data ? userLocation.data.address : null;
