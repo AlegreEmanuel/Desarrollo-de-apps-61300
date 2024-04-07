@@ -1,38 +1,33 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { colors } from "../global/colors";
 
-const OrdersItem = ({ item }) => {
-  const total = item.items.reduce(
-    (acc, currentItem) => acc + currentItem.quantity * currentItem.price,
-    0
-  );
+const OrdersItem = ({ order }) => {
+
+  if (!order) {
+    return <Text>No hay datos de orden</Text>;
+  }
+
+  const orderId = Object.keys(order)[0]; 
+  const orderDetails = order[orderId]; 
+
+  const { cartItems, orderDate, user } = orderDetails;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.date}>
-        {new Date(item.createdAt).toLocaleDateString()}
-      </Text>
-      <Text style={styles.total}>Total: ${total}</Text>
+      <Text>Usuario: {user}</Text>
+      <Text>Fecha de compra: {orderDate}</Text>
+      <Text>Total de la compra: ${
+        cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
+      }</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.blue_100,
-    padding: 16,
-    marginVertical: 8,
-    borderRadius: 8,
-  },
-  date: {
-    fontSize: 25,
-    fontFamily: 'debil',
-    marginBottom: 8,
-  },
-  total: {
-    fontSize: 18,
-    fontFamily: 'debil'
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "gray",
   },
 });
 

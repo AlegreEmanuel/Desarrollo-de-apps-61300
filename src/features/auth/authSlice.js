@@ -4,7 +4,7 @@ export const authSlice = createSlice ({
     name: "auth",
     initialState:{
         value:{
-            user: true,
+            user: null,
             token: null,
             imageCamera: null,
             localId: null,
@@ -20,14 +20,13 @@ export const authSlice = createSlice ({
 
         setUser: (state, action) => {
             state.value = {
-                /*...state.value,*/
+                ...state.value,
                 user: action.payload.email,
                 token: action.payload.idToken,
                 localId: action.payload.localId
             };
           },
 
-        cleanUser: (state) => (state.value = {user: null, token:null}),
         setCameraImage: (state,action) =>{
             state.value = {
                 ...state.value,
@@ -42,6 +41,7 @@ export const authSlice = createSlice ({
         },
 
         setUserLocation:(state,action)=>{
+            
             state.value= {
                 ...state.value,
                 location: {
@@ -53,18 +53,23 @@ export const authSlice = createSlice ({
             }
         },
         
-        signOut: (state) => {
+        logout: (state) => {
             state.value = {
                 user: null,
                 token: null,
                 imageCamera: null,
                 localId: null,
                 profileImage: null,
+                location:{
+                    latitude: null,
+                    longitude: null,
+                    address: null,
+            }
             };
         },
         
     },
 })
 
-export const {setUser,cleanUser, setCameraImage,setProfileImage, setUserLocation,signOut} = authSlice.actions;
+export const {setUser,cleanUser, setCameraImage,setProfileImage, setUserLocation,logout} = authSlice.actions;
 export default authSlice.reducer;

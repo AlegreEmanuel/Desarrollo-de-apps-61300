@@ -10,6 +10,10 @@ const SubmitButton = ({onPress, title}) => {
   )
 }
 
+
+
+export default SubmitButton;
+
 const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: colors.blue_300,
@@ -19,7 +23,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 3, 
-    fontFamily: 'Debil'
+    fontFamily: 'Debil',
+    margin: 5,
+    
   },
 
   buttonText: {
@@ -28,5 +34,3 @@ const styles = StyleSheet.create({
     fontFamily: 'Debil'
   },
 });
-
-export default SubmitButton;

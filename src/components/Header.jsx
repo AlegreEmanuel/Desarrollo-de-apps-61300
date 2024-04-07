@@ -1,39 +1,45 @@
 import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, Pressable, StatusBar } from "react-native";
 import { colors } from "../global/colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { signOut } from "../features/auth/authSlice";
-
-
+import { logout } from "../features/auth/authSlice";
+import { deleteSession } from "../db";
+import StyleText from "./StyleText";
 
 function Header({ title, showBackButton, navigation }) {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth?.value.user);
+  const { localId, user } = useSelector((state) => state.authReducer.value);
 
-
-  const SignOut = () => {
-    dispatch(signOut());
+  const SignOut = async () => {
+    dispatch(logout());
+    const deletedSession = await deleteSession({ localId });
   };
+
+  const arrowColor = showBackButton ? 'white' : colors.blue_200 ;
 
 
   return (
     <View style={styles.container}>
-      {showBackButton && (
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <Ionicons name="arrow-back" size={30} color="white" />
-        </TouchableOpacity>
+      <StatusBar backgroundColor="transparent" translucent barStyle="dark-content" />
+
+      <Pressable
+        onPress={() => showBackButton && navigation.goBack()}
+        style={styles.backButton}
+      >
+        <Ionicons name="arrow-back" size={30} color={arrowColor} />
+      </Pressable>
+
+      <View style={styles.titleContainer}>
+        
+        <StyleText strong>{title}</StyleText>
+      </View>
+
+      {user && (
+        <Pressable onPress={SignOut} style={styles.logoutButton}>
+          <Ionicons name="exit" size={24} color="white" />
+        </Pressable>
       )}
-      <Text style={styles.text}>{title}</Text>
-      {user ? (
-      <TouchableOpacity onPress={SignOut} style={styles.logoutButton}>
-        <Ionicons name="exit" size={24} color="white" />
-      </TouchableOpacity>):
-      (null)
-      }
     </View>
   );
 }
@@ -46,21 +52,21 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
     paddingVertical: 12,
+    paddingTop: StatusBar.currentHeight || 0,
   },
-
-  text: {
-    fontSize: 40,
-    fontFamily: "Fuerte",
+  
+  titleContainer: {
+    flex: 1,
+    justifyContent: "center", 
+    alignItems: "center", 
   },
-
   backButton: {
-    position: "absolute",
-    left: 16,
+    marginRight: 16,
+    marginLeft: 16,
   },
   logoutButton: {
-    position: "absolute",
-    right: 16,
+    marginLeft: 16,
+    marginRight: 16,
   },
 });

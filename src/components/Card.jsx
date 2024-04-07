@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         justifyContent: 'center',
         alignItems:'center',
-        width: '50%',
         
         
     },

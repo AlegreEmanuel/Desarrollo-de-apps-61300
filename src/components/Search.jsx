@@ -5,13 +5,13 @@ import { useDispatch } from "react-redux";
 import { setSearchKeyword } from "../features/shop/shopSlice";
 
 
-const Search = ({ onSearch }) => {
+const Search = ({ setKeyword }) => {
     const [input, setInput] = useState("");
     const dispatch = useDispatch();
 
     const search = () => {
         dispatch(setSearchKeyword(input));
-        onSearch(input);
+        setKeyword(input); 
         removeInput();
     }
 
@@ -38,30 +38,24 @@ export default Search;
 
 
 const styles = StyleSheet.create({
-
-
-
     container: {
-        minWidth:'90%',
-        flexDirection: 'row',
-        alignItems:'center'
-    },
-
-
-    input:{
         flexDirection: 'row',
         alignItems: 'center',
-        width: '100%',
-        backgroundColor: '#000', 
-        borderRadius: 8, 
-        margin: 16, 
+        width: '100%', 
+        paddingHorizontal: 16, 
+        marginBottom: 16, 
+    },
+    input: {
+        flex: 1, 
+        backgroundColor: '#000',
+        borderRadius: 8,
         elevation: 2,
-        shadowColor: '#000', 
-        shadowOffset: { width: 0, height: 2 }, 
-        shadowOpacity: 0.2, 
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
         shadowRadius: 4,
-        padding: 12, 
-        color: 'white'
-
-    }
-})
+        paddingVertical: 12,
+        paddingHorizontal: 12,
+        color: 'white',
+    },
+});

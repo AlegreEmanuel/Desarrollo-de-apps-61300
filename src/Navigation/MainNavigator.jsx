@@ -1,39 +1,42 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import TabNavigator from './TabNavigation'
-import AuthStack from './AuthStack'
-import { NavigationContainer } from "@react-navigation/native"
-import { useDispatch, useSelector } from 'react-redux'
-import { useGetProfileImageQuery, useGetUserLocationQuery } from '../services/ShopService'
-import { setProfileImage, setUserLocation } from '../features/auth/authSlice'
+import React, { useEffect, useState } from 'react';
+import { NavigationContainer } from "@react-navigation/native";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSession } from '../db';
+import Loading from '../components/Loading';
+import TabNavigator from './TabNavigation';
+import AuthStack from './AuthStack';
+import { setUser } from '../features/auth/authSlice';
 
 const MainNavigator = () => {
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const { user } = useSelector(state => state.authReducer.value);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const session = await fetchSession();
+        if (session.rows.length > 0) {
+          const userData = session.rows.item(0);
+          dispatch(setUser(userData));
+        }
+      } catch (error) {
+        console.log(error.message);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
 
-   const {user,localId} = useSelector(state => state.authReducer.value)
-   const{data,error,isLoading} = useGetProfileImageQuery(localId)
-   const{data: location} = useGetUserLocationQuery(localId)
+  if (loading) {
+    return <Loading />;
+  }
 
-   const dispatch = useDispatch()
-   
-   
-   useEffect(()=>{
-    if(data){
-      dispatch(setProfileImage(data.image))
-    }
-    if(location){
-      dispatch(setUserLocation(location))
-    }
-
-   },[data])
-
-    return (
+  return (
     <NavigationContainer>
-    {user ? <TabNavigator/> : <AuthStack/>}
+      {user ? <TabNavigator /> : <AuthStack />}
     </NavigationContainer>
-  )
-}
+  );
+};
 
-export default MainNavigator
-
-const styles = StyleSheet.create({})
+export default MainNavigator;

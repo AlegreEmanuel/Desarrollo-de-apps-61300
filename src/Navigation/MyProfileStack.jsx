@@ -20,7 +20,13 @@ const MyProfileStack = () => {
                 ? "My Profile"
                 : route.name === "Image Selector"
                 ? "Image Selector"
-                : "Default Title" 
+                : route.name === "Location Selector"
+                ? "Location Selector"
+                : route.name === "LocationMiddleScreen"
+                ? "Location Selector"
+                : "Default Title"
+
+
             }
             showBackButton={route.name !== "My Profile"}
             navigation={navigation}

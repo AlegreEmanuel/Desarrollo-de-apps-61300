@@ -9,6 +9,7 @@ import {useLoginMutation} from '../services/AuthService'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../features/auth/authSlice'
 import loginSchema from '../validations/loginSchema'
+import { insertSession } from '../db';
 
 
 
@@ -25,12 +26,16 @@ const Login = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log("Result data:", result.data);
-        if (result.data) {
-          console.log("Dispatching setUser");
-          dispatch(setUser(result.data));
-        }
-      }, [result]);
+      if (result.data) {
+        dispatch(setUser(result.data));
+        insertSession({
+          email: result.data.email,
+          localId: result.data.localId,
+          token: result.data.idToken
+        })
+        
+      }
+    }, [result]);
 
       const onSubmit = async () => {
         try {
@@ -58,9 +63,8 @@ const Login = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Login</Text>
-            <InputForm style={styles.input} label={"Email"} error={errorEmail} onChange={setEmail} />
-            <InputForm style={styles.input} label={"Password"} error={errorPassword} onChange={setPassword} />
-            
+            <InputForm  label={"Email"} error={errorEmail} onChange={setEmail} />
+            <InputForm  label={"Password"} error={errorPassword} onChange={setPassword} />
             {result.isLoading ? (<ActivityIndicator size="large" color="blue"/>
             ):( 
                 <View>

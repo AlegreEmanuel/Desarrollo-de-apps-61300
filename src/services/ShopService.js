@@ -5,9 +5,9 @@ export const shopApi = createApi({
     reducerPath: "shopApi",
     baseQuery: fetchBaseQuery({baseUrl: base_url}),
     endpoints : (builder) =>({
-        /*getProducts: builder.query({
+        getProducts: builder.query({
             query:() => 'products.json',
-        }),*/
+        }),
         getCategories: builder.query({
             query: () => 'categories.json'
         }),
@@ -21,9 +21,14 @@ export const shopApi = createApi({
                 body: order
             })
         }),
+        getOrders: builder.query({
+            query: () => 'orders.json',
+        }),
+
         getProfileImage: builder.query({
             query:(localId) =>`profileImages/${localId}.json`
         }),
+        
         postProfileImage: builder.mutation({
             query:({localId,image})=>({
                 url: `profileImages/${localId}.json`,
@@ -35,7 +40,7 @@ export const shopApi = createApi({
 
         }),
         getUserLocation: builder.query({
-            query: (localId) => `location/${localId}.json`
+            query: (localId) => `locations/${localId}.json`
         }),
 
         postUserLocation: builder.mutation({
@@ -53,11 +58,12 @@ export const shopApi = createApi({
 
 })
 
-export const { /*useGetProductsQuery*/ useGetCategoriesQuery, 
+export const {  useGetProductsQuery, useGetCategoriesQuery, 
 useGetProductsByCategoryQuery, 
 usePostOrderMutation,
 useGetProfileImageQuery,
 usePostProfileImageMutation,
 usePostUserLocationMutation,
 useGetUserLocationQuery,
+useGetOrdersQuery,
  } = shopApi

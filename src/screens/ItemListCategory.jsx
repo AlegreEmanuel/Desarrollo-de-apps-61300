@@ -7,45 +7,39 @@ import { useSelector } from "react-redux";
 import { useGetProductsByCategoryQuery } from "../services/ShopService";
 
 
-const ItemListCategory = ({navigation }) => {
-    
-    //const productsFilteredByCategory = useSelector((state) => state.shopReducer.value.productFilteredByCategory);
-    //const searchKeyword = useSelector((state) => state.shopReducer.value.searchKeyword);
-    const category = useSelector((state)=>state.shopReducer.value.categorySelected)
-    const {data: productsFilteredByCategory, isLoading, error} = useGetProductsByCategoryQuery(category)
+const ItemListCategory = ({ navigation }) => {
+    const category = useSelector((state) => state.shopReducer.value.categorySelected)
+    const { data: productsFilteredByCategory, isLoading, error } = useGetProductsByCategoryQuery(category)
     
     const [products, setProducts] = useState([])
-    const [keyword, setKeyword] = useState("")
+    const [keyword, setKeyword] = useState(""); 
 
     useEffect(() => {
-        console.log(productsFilteredByCategory);
         if (productsFilteredByCategory) {
             const productsRaw = Object.values(productsFilteredByCategory)
             const productsFiltered = productsRaw.filter((product) =>
-                product.title.includes(keyword)
+                product.title.toLowerCase().indexOf(keyword.toLowerCase()) !== -1 
             );
             setProducts(productsFiltered);
         }
     }, [productsFilteredByCategory, keyword]);
 
-
-        return(
-            <View style={{flex:1, backgroundColor: colors.blue_200}}>
-                
-                <View style={styles.header}>
-                <Search keyword={setKeyword} onSearch={setKeyword} />
+    return (
+        <View style={{ backgroundColor: colors.blue_200, flex: 1, paddingHorizontal: 16 }}>
+            <View>
+                <Search keyword={keyword} setKeyword={setKeyword} />
             </View>
-                <FlatList style={{marginTop: 30}}
+            <FlatList
+                style={{ marginTop: 30 }}
                 data={products}
-                renderItem={({item})=> <ProductItem product={item} navigation={navigation}/>}
-                keyExtractor={(item)=> item.id}
+                renderItem={({ item }) => <ProductItem product={item} navigation={navigation} />}
+                keyExtractor={(item) => item.id}
                 showsVerticalScrollIndicator={false}
-                />
-                
-                
-            </View>
-        )
+            />
+        </View>
+    )
 }
+
 
 export default ItemListCategory;
 

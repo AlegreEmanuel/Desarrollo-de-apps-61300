@@ -14,7 +14,7 @@ const CategoryItem = ({category, navigation}) => {
         navigation.navigate("ItemListCategory", { category });
       }}
        >
-            <Text style={width < 400 ? styles.textMin : styles.text}>{category}</Text>
+        <Text style={width < 400 ? styles.textMin : styles.text}>{category}</Text>
       </Pressable>
         </Card>
   );

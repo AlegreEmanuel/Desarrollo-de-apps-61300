@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native-web";
+import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { TextInput } from "react-native";
 import { colors } from "../global/colors";
@@ -34,12 +34,9 @@ const styles = StyleSheet.create({
     inputContainer: {
       marginBottom: 16,
     },
-    label: {
-      fontSize: 16,
-      marginBottom: 8,
-    },
     input: {
       borderWidth: 1,
+      width: 200,
       borderColor: colors.blue_400,
       borderRadius: 8,
       padding: 10,

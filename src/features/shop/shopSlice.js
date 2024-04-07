@@ -12,6 +12,7 @@ export const shopSlice = createSlice({
             productFilteredByCategory:[],
             productIdSelected: null,
             searchKeyword: '',
+
         }
     },
     reducers:{
@@ -28,8 +29,9 @@ export const shopSlice = createSlice({
       },
       setSearchKeyword: (state, action) => {
         state.value.searchKeyword = action.payload;
-    },
+      },
       
+  
     }
 })
 
